@@ -2,7 +2,7 @@
 %global vendor aurora
 
 Name:           aurora
-Version:        0.1.12
+Version:        0.1.14
 Release:        1%{?dist}
 Summary:        Aurora branding
 
@@ -81,6 +81,25 @@ install -Dpm0644 -t %{buildroot}%{_datadir}/backgrounds/%{vendor}/xe_sunset/cont
 install -Dpm0644 -t %{buildroot}%{_datadir}/backgrounds/%{vendor}/xe_sunset/ wallpapers/images/xe_sunset/metadata.json
 ln -sr %{buildroot}%{_datadir}/backgrounds/%{vendor}/xe_sunset/ %{buildroot}%{_datadir}/wallpapers/
 
+install -Dpm0644 -t %{buildroot}%{_datadir}/backgrounds/%{vendor}/ kde-config/aurora.xml
+install -Dpm0644 -t %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/ kde-config/dev.getaurora.aurora.desktop/metadata.{desktop,json}
+install -Dpm0644 -t %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/ kde-config/dev.getaurora.aurora.desktop/contents/defaults
+install -Dpm0644 -t %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/plasmoidsetupscripts/ kde-config/dev.getaurora.aurora.desktop/contents/plasmoidsetupscripts/org.kde.plasma.{folder,kickoff,systemtray}.js
+
+mkdir -p %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/icons/
+ln -sr %{buildroot}/icons/hicolor/scalable/distributor-logo.svg %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/icons/aurora-logo.svg
+
+mkdir -p %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/
+install -Dpm0644 -t %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/ kde-config/dev.getaurora.aurora.desktop/contents/splash/Splash.qml
+
+gzip -c logos/distributor-logo.svg > %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/aurora_logo.svgz
+
+install -Dpm0644 -t %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/previews/ kde-config/dev.getaurora.aurora.desktop/contents/previews/fullscreenpreview.jpg
+install -Dpm0644 -t %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/previews/ kde-config/dev.getaurora.aurora.desktop/contents/previews/preview.png
+install -Dpm0644 -t %{buildroot}/%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/previews/ kde-config/dev.getaurora.aurora.desktop/contents/previews/splash.png
+
+install -Dpm0644 -t %{buildroot}/%{_kf6_datadir}/discover/ kde-config/discover/featuredurlrc
+install -Dpm0644 -t %{buildroot}/%{_datadir}/ublue-os/discover kde-config/discover/featured.json
 
 %check
 
@@ -182,6 +201,32 @@ Wallpapers included on Aurora by default
 %{_datadir}/wallpapers/xe_foothills
 %{_datadir}/wallpapers/xe_space_needle
 %{_datadir}/wallpapers/xe_sunset
+
+
+%package kde-config
+Version:        0.1.1
+Summary:        Aurora KDE Plasma configuration
+License:        Apache-2.0 AND GPL-2.0-or-later
+Requires:       aurora-logos
+# Needed when we want to use kf6_datadir macro
+BuildRequires:  kf6-rpm-macros
+
+%description kde-config
+This sets the Aurora defaults for Logos, Wallpapers, Theme and Editor's choice in Discover.
+
+%files kde-config
+%{_datadir}/backgrounds/aurora/aurora.xml
+%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/metadata.{desktop,json}
+%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/defaults
+%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/plasmoidsetupscripts/org.kde.plasma.{folder,kickoff,systemtray}.js
+%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/icons/aurora-logo.svg
+%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/Splash.qml
+%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/aurora_logo.svgz
+%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/previews/fullscreenpreview.jpg
+%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/previews/preview.png
+%{_kf6_datadir}/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/previews/splash.png
+%{_kf6_datadir}/discover/featuredurlrc
+%{_datadir}/ublue-os/discover/featured.json
 
 
 %changelog
